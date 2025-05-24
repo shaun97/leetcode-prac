@@ -24,9 +24,9 @@ class Solution:
                 if endQuery < i:
                     removal += 1
                     continue
-                offset += 1
-                diff_arr[endQuery + 1] -= 1
-                nums[i] -= 1
+            offset += 1
+            diff_arr[endQuery + 1] -= 1
+            nums[i] -= 1
             if nums[i] > 0:
                 return -1
         return len(pQ) + removal
