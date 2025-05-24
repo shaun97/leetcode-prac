@@ -1,0 +1,33 @@
+class Solution:
+    def longestPalindrome(self, words: List[str]) -> int:
+        wordsDict = {}
+
+        def is_palindrome(str):
+            for i in range(len(str) // 2):
+                if str[i] != str[len(word) - 1 - i]:
+                    return False
+            return True 
+
+
+        for word in words:
+            if word in wordsDict:
+                wordsDict[word] += 1
+            else:
+                wordsDict[word] = 1
+
+        res = 0
+        for word, amount in wordsDict.items():
+            while wordsDict.get(word[::-1]) and wordsDict[word[::-1]] > 0 and wordsDict[word] > 0:
+                if is_palindrome(word) and wordsDict[word] < 2:
+                    break
+                wordsDict[word[::-1]] -= 1
+                wordsDict[word] -= 1
+                res += (len(word) * 2)
+
+        longest_palindrome_len = 0
+        for word, amount in wordsDict.items():
+            if is_palindrome(word) and len(word) > longest_palindrome_len and wordsDict[word] > 0:
+                longest_palindrome_len = len(word)
+
+        res += longest_palindrome_len
+        return res
