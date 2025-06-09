@@ -1,0 +1,32 @@
+using-a-robot-to-print-the-lexicographically-smallest-string.py
+class Solution:
+    def robotWithString(self, s: str) -> str:
+        stack = []
+        res = ''
+        dic = [0 for _ in range(26)]
+        for char in s:
+            dic[ord(char) - ord('a')] += 1
+        left = 0
+        while len(res) < len(s):
+            if len(stack) == 0:
+                dic[ord(s[left]) - ord('a')] -= 1
+                stack.append(s[left])
+                left += 1
+                continue
+            elif left == len(s):
+                res += stack.pop()
+                continue
+            lastT = stack[-1] 
+            isSmallest = True
+            for i in range(ord(lastT) - ord('a')):
+                if dic[i] > 0:
+                    isSmallest = False
+                    break
+            if isSmallest: # pop from stack and form res
+                res += stack.pop()
+            else:
+                dic[ord(s[left]) - ord('a')] -= 1
+                stack.append(s[left])
+                left += 1
+        return res
+                
